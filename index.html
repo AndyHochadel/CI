@@ -6,344 +6,156 @@
 <title>Andy Hochadel — Continuous Improvement</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ══ DESIGN TOKENS ════════════════════════════════════════════════════════ */
-:root {
-  --ink:#1a1a1a; --ink-2:#4a4a48; --ink-3:#8a8a84;
-  --paper:#f6f5f0; --paper-2:#edebe4; --paper-3:#e2dfd6;
-  --accent:#c8410a; --accent-hover:#a63508; --accent-soft:#fdf4ec;
-  --border:#d4d0c6; --border-light:#e8e5dc;
-  --green:#2d7a4f; --green-bg:#e8f5ee;
-  --white:#ffffff;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'DM Sans',sans-serif;
-  --radius:5px; --radius-lg:8px;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
-  --shadow:0 1px 4px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
-  --shadow-lg:0 4px 16px rgba(0,0,0,.1);
-  --max-w:960px;
-  --transition:150ms ease;
-}
+:root{--ink:#1a1a1a;--ink-2:#4a4a48;--ink-3:#8a8a84;--paper:#f6f5f0;--paper-2:#edebe4;--paper-3:#e2dfd6;--accent:#c8410a;--accent-hover:#a63508;--accent-soft:#fdf4ec;--border:#d4d0c6;--border-light:#e8e5dc;--green:#2d7a4f;--green-bg:#e8f5ee;--white:#fff;--mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;--radius:5px;--radius-lg:8px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 1px 4px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);--shadow-lg:0 4px 16px rgba(0,0,0,.1);--max-w:960px;--transition:150ms ease;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{
-  font-family:var(--sans);background:var(--paper);color:var(--ink);
-  min-height:100vh;-webkit-font-smoothing:antialiased;
-  line-height:1.65;
-}
-
-/* ══ TEXTURE OVERLAY ═════════════════════════════════════════════════════ */
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  background-size:200px 200px;
-  opacity:.4;
-}
-
-/* ══ HEADER ═══════════════════════════════════════════════════════════════ */
-header{
-  background:var(--ink);color:var(--paper);
-  border-bottom:2px solid var(--accent);
-  position:sticky;top:0;z-index:100;
-}
-.header-inner{
-  max-width:var(--max-w);margin:0 auto;
-  padding:0 2rem;height:54px;
-  display:flex;align-items:center;justify-content:space-between;
-}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.65;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.4;}
+header{background:var(--ink);color:var(--paper);border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:100;}
+.header-inner{max-width:var(--max-w);margin:0 auto;padding:0 2rem;height:54px;display:flex;align-items:center;justify-content:space-between;}
 .logo-group{display:flex;align-items:center;gap:14px;}
 .logo-company{font-family:var(--sans);font-weight:700;font-size:15px;color:#fff;letter-spacing:.02em;}
 .logo-company span{color:var(--accent);}
 .logo-divider{width:1px;height:20px;background:rgba(255,255,255,.15);}
 .logo-sub{font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);}
-
 nav{display:flex;gap:3px;}
-nav a{
-  font-family:var(--mono);font-size:10.5px;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;
-  padding:6px 14px;border-radius:var(--radius);
-  text-decoration:none;color:rgba(255,255,255,.4);
-  transition:all var(--transition);border:1px solid transparent;
-}
+nav a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius);text-decoration:none;color:rgba(255,255,255,.4);transition:all var(--transition);border:1px solid transparent;cursor:pointer;}
 nav a:hover{color:rgba(255,255,255,.85);}
 nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-
-/* ══ PAGE CONTAINERS ═════════════════════════════════════════════════════ */
 .page{display:none;max-width:var(--max-w);margin:0 auto;padding:2.5rem 2rem 4rem;}
 .page.active{display:block;}
-
-/* ══ PAGE HEADER ═════════════════════════════════════════════════════════ */
 .page-header{margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
-.page-header h1{
-  font-family:var(--mono);font-size:13px;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
-  margin-bottom:6px;
-}
+.page-header h1{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px;}
 .page-header p{font-size:15px;color:var(--ink-3);max-width:600px;}
-
-/* ══ ABOUT PAGE ══════════════════════════════════════════════════════════ */
 .about-content{display:grid;grid-template-columns:1fr;gap:2rem;}
-.about-text{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:2rem;
-  box-shadow:var(--shadow-sm);
-}
-.about-text h2{
-  font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
-  margin-bottom:1rem;
-}
-.about-text p{
-  font-size:15px;color:var(--ink-2);margin-bottom:1rem;line-height:1.7;
-}
+.about-text{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow-sm);}
+.about-text h2{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.about-text p{font-size:15px;color:var(--ink-2);margin-bottom:1rem;line-height:1.7;}
 .about-text p:last-child{margin-bottom:0;}
-
-.about-photos{
-  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
-}
-.photo-placeholder{
-  background:var(--paper-2);border:1.5px dashed var(--border);
-  border-radius:var(--radius-lg);
-  aspect-ratio:4/3;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;color:var(--ink-3);
-  transition:all var(--transition);
-}
-.photo-placeholder:hover{border-color:var(--accent);background:var(--accent-soft);}
-.photo-placeholder span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;}
+.about-photos{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.photo-placeholder{background:var(--paper-2);border:1.5px dashed var(--border);border-radius:var(--radius-lg);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink-3);}
 .photo-placeholder .icon{font-size:24px;opacity:.4;}
-
-/* ══ KAIZEN LOG ══════════════════════════════════════════════════════════ */
-.log-toolbar{
-  display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;
-  flex-wrap:wrap;
-}
-.log-toolbar input{
-  font-family:var(--sans);font-size:13px;padding:8px 12px;
-  border:1px solid var(--border);border-radius:var(--radius);
-  background:var(--white);outline:none;flex:1;min-width:180px;max-width:340px;
-}
+.photo-placeholder span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;}
+.log-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.log-toolbar input{font-family:var(--sans);font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);outline:none;flex:1;min-width:180px;max-width:340px;}
 .log-toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(200,65,10,.08);}
-.log-toolbar select{
-  font-family:var(--mono);font-size:11px;padding:8px 10px;
-  border:1px solid var(--border);border-radius:var(--radius);
-  background:var(--white);color:var(--ink-2);outline:none;cursor:pointer;
-}
+.log-toolbar select{font-family:var(--mono);font-size:11px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);color:var(--ink-2);outline:none;cursor:pointer;}
 .log-count{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-left:auto;}
-
-/* ── Entry Row ─── */
+.btn{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:7px 14px;border-radius:var(--radius);cursor:pointer;border:1px solid;transition:all var(--transition);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-primary:hover{background:var(--accent-hover);}
+.btn-primary:disabled{background:#bbb;border-color:#bbb;cursor:not-allowed;opacity:.6;}
+.btn-ghost{background:transparent;color:var(--ink-2);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--ink-3);color:var(--ink);background:var(--paper-2);}
+.btn-danger{background:transparent;color:#c0392b;border-color:#e8b4b0;}
+.btn-danger:hover{background:#fdecea;}
+.btn-sm{padding:5px 10px;font-size:10px;}
 .entry-list{display:flex;flex-direction:column;gap:0;}
-
-.entry{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:0;
-  overflow:hidden;
-  transition:all var(--transition);
-}
+.entry{background:var(--white);border:1px solid var(--border);border-radius:0;overflow:hidden;transition:all var(--transition);}
 .entry:first-child{border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
 .entry:last-child{border-radius:0 0 var(--radius-lg) var(--radius-lg);}
 .entry:only-child{border-radius:var(--radius-lg);}
-.entry + .entry{border-top:none;}
-
-.entry-row{
-  display:grid;
-  grid-template-columns:72px 1fr auto;
-  gap:0;
-  cursor:pointer;
-  transition:background var(--transition);
-  min-height:72px;
-}
+.entry+.entry{border-top:none;}
+.entry-row{display:grid;grid-template-columns:72px 1fr auto;gap:0;cursor:pointer;transition:background var(--transition);min-height:72px;}
 .entry-row:hover{background:var(--accent-soft);}
-
-.entry-thumb{
-  width:72px;height:72px;
-  background:var(--paper-2);
-  display:flex;align-items:center;justify-content:center;
-  border-right:1px solid var(--border-light);
-  overflow:hidden;flex-shrink:0;
-}
+.entry-thumb{width:72px;height:72px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--border-light);overflow:hidden;flex-shrink:0;}
 .entry-thumb img{width:100%;height:100%;object-fit:cover;}
 .entry-thumb .thumb-icon{font-size:20px;color:var(--ink-3);opacity:.4;}
-
-.entry-info{
-  padding:12px 16px;display:flex;flex-direction:column;justify-content:center;
-  gap:3px;min-width:0;
-}
-.entry-title{
-  font-size:14px;font-weight:600;color:var(--ink);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.entry-desc{
-  font-size:12.5px;color:var(--ink-3);line-height:1.4;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.entry-meta{
-  display:flex;align-items:center;gap:16px;
-  padding:0 16px;flex-shrink:0;
-}
-.entry-date{
-  font-family:var(--mono);font-size:10px;font-weight:500;
-  color:var(--ink-3);letter-spacing:.04em;white-space:nowrap;
-}
-.entry-tag{
-  font-family:var(--mono);font-size:9px;font-weight:600;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:2px 8px;border-radius:10px;
-  white-space:nowrap;
-}
+.entry-info{padding:12px 16px;display:flex;flex-direction:column;justify-content:center;gap:3px;min-width:0;}
+.entry-title{font-size:14px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.entry-desc{font-size:12.5px;color:var(--ink-3);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.entry-meta{display:flex;align-items:center;gap:16px;padding:0 16px;flex-shrink:0;}
+.entry-date{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink-3);letter-spacing:.04em;white-space:nowrap;}
+.entry-tag{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;white-space:nowrap;}
 .entry-tag.quick{background:var(--green-bg);color:var(--green);}
 .entry-tag.project{background:#e8eaf6;color:#3949ab;}
 .entry-tag.system{background:#fff3e0;color:#e65100;}
-
-.entry-chevron{
-  display:flex;align-items:center;padding:0 14px;
-  color:var(--ink-3);font-size:14px;
-  transition:transform .25s ease;
-}
+.entry-chevron{display:flex;align-items:center;padding:0 14px;color:var(--ink-3);font-size:14px;transition:transform .25s ease;}
 .entry.open .entry-chevron{transform:rotate(90deg);}
-
-/* ── Dropdown Detail ─── */
-.entry-detail{
-  max-height:0;overflow:hidden;
-  transition:max-height .35s ease;
-  border-top:none;
-}
-.entry.open .entry-detail{
-  max-height:2000px;
-  border-top:1px solid var(--border-light);
-}
-.detail-inner{
-  padding:1.5rem 1.75rem;
-  background:var(--paper);
-}
-
-/* DMAIC sections */
-.dmaic-flow{
-  display:grid;grid-template-columns:1fr;gap:1rem;
-}
-.dmaic-step{
-  padding:1rem 1.25rem;
-  background:var(--white);
-  border:1px solid var(--border-light);
-  border-radius:var(--radius);
-  border-left:3px solid var(--accent);
-}
-.dmaic-step-label{
-  font-family:var(--mono);font-size:9px;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:6px;
-}
+.entry-detail{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.entry.open .entry-detail{border-top:1px solid var(--border-light);}
+.detail-inner{padding:1.5rem 1.75rem;background:var(--paper);}
+.dmaic-flow{display:grid;gap:1rem;}
+.dmaic-step{padding:1rem 1.25rem;background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);border-left:3px solid var(--accent);}
+.dmaic-step-label{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
 .dmaic-step p{font-size:14px;color:var(--ink-2);line-height:1.65;}
-
-.detail-link{
-  display:inline-flex;align-items:center;gap:6px;
-  margin-top:1.25rem;
-  font-family:var(--mono);font-size:11px;font-weight:600;
-  letter-spacing:.04em;text-transform:uppercase;
-  color:var(--accent);text-decoration:none;
-  padding:7px 14px;
-  border:1px solid var(--accent);border-radius:var(--radius);
-  transition:all var(--transition);
-}
+.detail-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.25rem;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);text-decoration:none;padding:7px 14px;border:1px solid var(--accent);border-radius:var(--radius);transition:all var(--transition);}
 .detail-link:hover{background:var(--accent);color:#fff;}
-
-.detail-images{
-  display:flex;gap:10px;margin-top:1.25rem;flex-wrap:wrap;
-}
-.detail-images .detail-img{
-  width:160px;height:100px;
-  background:var(--paper-2);border:1px solid var(--border);
-  border-radius:var(--radius);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-}
+.detail-images{display:flex;gap:10px;margin-top:1.25rem;flex-wrap:wrap;}
+.detail-images .detail-img{width:160px;height:100px;background:var(--paper-2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all var(--transition);}
+.detail-images .detail-img:hover{border-color:var(--accent);box-shadow:var(--shadow);}
 .detail-images .detail-img img{width:100%;height:100%;object-fit:cover;}
-.detail-images .detail-img .icon{font-size:18px;color:var(--ink-3);opacity:.3;}
-
-/* ══ RESOURCES PAGE ══════════════════════════════════════════════════════ */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:center;justify-content:center;cursor:pointer;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90%;max-height:90%;object-fit:contain;border-radius:var(--radius);}
 .resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.resource-card{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:1.5rem;
-  box-shadow:var(--shadow-sm);
-  transition:all var(--transition);
-}
+.resource-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);transition:all var(--transition);}
 .resource-card:hover{box-shadow:var(--shadow);border-color:var(--accent);}
-.resource-card h3{
-  font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--ink);margin-bottom:6px;
-}
+.resource-card h3{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:6px;}
 .resource-card p{font-size:13px;color:var(--ink-3);margin-bottom:1rem;line-height:1.5;}
-.resource-tag{
-  font-family:var(--mono);font-size:9px;font-weight:600;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:3px 8px;border-radius:10px;
-  background:var(--paper-3);color:var(--ink-3);
-}
-
-/* ══ FOOTER ══════════════════════════════════════════════════════════════ */
-footer{
-  border-top:1px solid var(--border);
-  padding:2rem;text-align:center;
-  font-family:var(--mono);font-size:10px;
-  color:var(--ink-3);letter-spacing:.06em;
-}
-
-/* ══ ANIMATIONS ══════════════════════════════════════════════════════════ */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(12px);}
-  to{opacity:1;transform:translateY(0);}
-}
+.resource-tag{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:var(--paper-3);color:var(--ink-3);}
+.admin-login{max-width:340px;margin:3rem auto;text-align:center;}
+.admin-login input{font-family:var(--sans);font-size:14px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);width:100%;margin-bottom:10px;outline:none;}
+.admin-login input:focus{border-color:var(--accent);}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow-sm);margin-bottom:1.5rem;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem;}
+.form-grid .full{grid-column:1/-1;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);}
+.field input,.field textarea,.field select{font-family:var(--sans);font-size:14px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);color:var(--ink);outline:none;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(200,65,10,.08);}
+.field textarea{resize:vertical;min-height:80px;}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;padding-top:1.25rem;border-top:1px solid var(--paper-2);margin-top:1.25rem;}
+.img-upload-zone{border:1.5px dashed var(--border);border-radius:var(--radius);padding:1rem;text-align:center;cursor:pointer;background:var(--paper);transition:all var(--transition);}
+.img-upload-zone:hover{border-color:var(--accent);background:var(--accent-soft);}
+.img-upload-zone input{display:none;}
+.img-upload-zone p{font-size:12px;color:var(--ink-3);margin-top:4px;}
+.img-upload-zone strong{font-family:var(--mono);font-size:11px;color:var(--ink-2);}
+.img-preview-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.img-preview-item{position:relative;width:80px;height:60px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+.img-preview-item img{width:100%;height:100%;object-fit:cover;}
+.img-preview-item .remove-img{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.admin-entry-list{margin-top:1.5rem;}
+.admin-entry-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;}
+.admin-entry-row:hover{border-color:var(--accent);}
+.admin-entry-title{flex:1;font-size:13px;font-weight:500;}
+.admin-entry-date{font-family:var(--mono);font-size:10px;color:var(--ink-3);}
+.loading-msg{text-align:center;padding:3rem;color:var(--ink-3);font-family:var(--mono);font-size:11px;}
+.spinner-sm{display:inline-block;width:16px;height:16px;border:2px solid var(--paper-3);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .page.active .entry{animation:fadeUp .35s ease both;}
 .page.active .entry:nth-child(1){animation-delay:.05s;}
 .page.active .entry:nth-child(2){animation-delay:.1s;}
 .page.active .entry:nth-child(3){animation-delay:.15s;}
 .page.active .entry:nth-child(4){animation-delay:.2s;}
 .page.active .entry:nth-child(5){animation-delay:.25s;}
-.page.active .entry:nth-child(6){animation-delay:.3s;}
-.page.active .about-text{animation:fadeUp .4s ease both;}
-.page.active .about-photos{animation:fadeUp .4s ease .1s both;}
-.page.active .resource-card{animation:fadeUp .35s ease both;}
-.page.active .resource-card:nth-child(2){animation-delay:.08s;}
-.page.active .resource-card:nth-child(3){animation-delay:.16s;}
-
-/* ══ RESPONSIVE ══════════════════════════════════════════════════════════ */
-@media(max-width:700px){
-  .header-inner{padding:0 1rem;}
-  .logo-sub{display:none;}
-  nav a{padding:5px 10px;font-size:10px;}
-  .page{padding:1.5rem 1rem 3rem;}
-  .entry-row{grid-template-columns:56px 1fr auto;}
-  .entry-thumb{width:56px;height:56px;}
-  .entry-meta{padding:0 10px;gap:8px;flex-direction:column;align-items:flex-end;justify-content:center;}
-  .about-photos{grid-template-columns:1fr;}
-  .resource-grid{grid-template-columns:1fr;}
-  .detail-inner{padding:1.25rem;}
-}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;padding:10px 20px;border-radius:var(--radius);z-index:600;transition:transform .25s ease;pointer-events:none;box-shadow:var(--shadow-lg);}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.terr{background:#8b2020;}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em;}
+@media(max-width:700px){.header-inner{padding:0 1rem;}.logo-sub{display:none;}nav a{padding:5px 10px;font-size:10px;}.page{padding:1.5rem 1rem 3rem;}.entry-row{grid-template-columns:56px 1fr auto;}.entry-thumb{width:56px;height:56px;}.entry-meta{padding:0 10px;gap:8px;flex-direction:column;align-items:flex-end;justify-content:center;}.about-photos,.resource-grid{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
+<div id="toast"></div>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><img id="lightbox-img" src="" alt=""></div>
 
-<header>
-  <div class="header-inner">
-    <div class="logo-group">
-      <div class="logo-company">Andy <span>Hochadel</span></div>
-      <div class="logo-divider"></div>
-      <div class="logo-sub">Continuous Improvement</div>
-    </div>
-    <nav>
-      <a href="#about" class="active" onclick="showPage('about')">About</a>
-      <a href="#kaizen" onclick="showPage('kaizen')">Kaizen Log</a>
-      <a href="#resources" onclick="showPage('resources')">Resources</a>
-    </nav>
+<header><div class="header-inner">
+  <div class="logo-group">
+    <div class="logo-company">Andy <span>Hochadel</span></div>
+    <div class="logo-divider"></div>
+    <div class="logo-sub">Continuous Improvement</div>
   </div>
-</header>
+  <nav id="main-nav">
+    <a class="active" onclick="showPage('about')">About</a>
+    <a onclick="showPage('kaizen')">Kaizen Log</a>
+    <a onclick="showPage('resources')">Resources</a>
+    <a onclick="showPage('admin')" style="opacity:.3;font-size:9px;" title="Admin">&#9998;</a>
+  </nav>
+</div></header>
 
-<!-- ══ ABOUT ═════════════════════════════════════════════════════════════ -->
 <div id="page-about" class="page active">
-  <div class="page-header">
-    <h1>About</h1>
-    <p>Manufacturing continuous improvement, one kaizen at a time.</p>
-  </div>
+  <div class="page-header"><h1>About</h1><p>Manufacturing continuous improvement, one kaizen at a time.</p></div>
   <div class="about-content">
     <div class="about-text">
       <h2>Who I Am</h2>
@@ -352,244 +164,273 @@ footer{
       <p>This site exists to document what we've done, share what worked (and what didn't), and give other small shops tools they can adapt. If something here saves you time or gives you an idea, that's a win.</p>
     </div>
     <div class="about-photos">
-      <div class="photo-placeholder">
-        <span class="icon">📸</span>
-        <span>Your photo here</span>
-      </div>
-      <div class="photo-placeholder">
-        <span class="icon">🏭</span>
-        <span>Shop floor photo</span>
-      </div>
+      <div class="photo-placeholder"><span class="icon">&#128247;</span><span>Your photo here</span></div>
+      <div class="photo-placeholder"><span class="icon">&#127981;</span><span>Shop floor photo</span></div>
     </div>
   </div>
 </div>
 
-<!-- ══ KAIZEN LOG ════════════════════════════════════════════════════════ -->
 <div id="page-kaizen" class="page">
-  <div class="page-header">
-    <h1>Kaizen Log</h1>
-    <p>A record of every improvement — small fixes, process changes, and major projects.</p>
-  </div>
-
+  <div class="page-header"><h1>Kaizen Log</h1><p>A record of every improvement — small fixes, process changes, and major projects.</p></div>
   <div class="log-toolbar">
-    <input type="text" id="log-search" placeholder="Search projects…" oninput="filterEntries()">
-    <select id="log-filter" onchange="filterEntries()">
-      <option value="">All types</option>
-      <option value="quick">Quick Win</option>
-      <option value="project">Project</option>
-      <option value="system">System</option>
-    </select>
+    <input type="text" id="log-search" placeholder="Search projects..." oninput="filterEntries()">
+    <select id="log-filter" onchange="filterEntries()"><option value="">All types</option><option value="quick">Quick Win</option><option value="project">Project</option><option value="system">System</option></select>
     <span class="log-count" id="log-count"></span>
   </div>
-
-  <div class="entry-list" id="entry-list">
-    <!-- Entries are rendered by JS -->
-  </div>
+  <div class="entry-list" id="entry-list"><div class="loading-msg"><span class="spinner-sm"></span>Loading entries...</div></div>
 </div>
 
-<!-- ══ RESOURCES ═════════════════════════════════════════════════════════ -->
 <div id="page-resources" class="page">
-  <div class="page-header">
-    <h1>Resources</h1>
-    <p>Tools and templates for other shops to adapt. More coming soon.</p>
-  </div>
+  <div class="page-header"><h1>Resources</h1><p>Tools and templates for other shops to adapt. More coming soon.</p></div>
   <div class="resource-grid">
-    <div class="resource-card">
-      <h3>Pull Card System</h3>
-      <p>A complete kanban pull card manager with Google Sheets backend. Create, print, and track reorder cards for your shop floor inventory.</p>
-      <span class="resource-tag">Coming Soon</span>
-    </div>
-    <div class="resource-card">
-      <h3>5S Audit Checklist</h3>
-      <p>Standardized checklist for monthly 5S audits. Score each area and track improvement over time.</p>
-      <span class="resource-tag">Coming Soon</span>
-    </div>
+    <div class="resource-card"><h3>Pull Card System</h3><p>A complete kanban pull card manager with Google Sheets backend. Create, print, and track reorder cards for your shop floor inventory.</p><span class="resource-tag">Coming Soon</span></div>
+    <div class="resource-card"><h3>5S Audit Checklist</h3><p>Standardized checklist for monthly 5S audits. Score each area and track improvement over time.</p><span class="resource-tag">Coming Soon</span></div>
   </div>
 </div>
 
-<footer>
-  Andy Hochadel · Continuous Improvement · <span id="footer-year"></span>
-</footer>
+<div id="page-admin" class="page">
+  <div class="page-header"><h1>Admin</h1><p>Manage your kaizen log entries.</p></div>
+  <div id="admin-login" class="admin-login">
+    <p style="font-size:13px;color:var(--ink-3);margin-bottom:1rem;">Enter your admin password to continue.</p>
+    <input type="password" id="admin-pw" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button class="btn btn-primary" onclick="adminLogin()" style="width:100%;">Log In</button>
+  </div>
+  <div id="admin-panel" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;">Your Entries</span>
+      <button class="btn btn-primary" onclick="openEntryForm()">+ New Entry</button>
+    </div>
+    <div id="entry-form-wrap" style="display:none;">
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="field"><label>Title *</label><input type="text" id="ef-title" placeholder="e.g. 5S Tool Shadow Boards"></div>
+          <div class="field"><label>Type *</label><select id="ef-type"><option value="quick">Quick Win</option><option value="project">Project</option><option value="system">System</option></select></div>
+          <div class="field full"><label>Short Description *</label><input type="text" id="ef-desc" placeholder="One-line summary for the log view"></div>
+          <div class="field"><label>Date (YYYY-MM)</label><input type="text" id="ef-date" placeholder="e.g. 2026-04"></div>
+          <div class="field"><label>Full Write-Up Link (optional)</label><input type="text" id="ef-link" placeholder="e.g. projects/pullcard.html"></div>
+          <div class="field full"><label>Thumbnail Image</label>
+            <label class="img-upload-zone"><input type="file" accept="image/*" onchange="handleThumbUpload(this)"><strong>Click to upload thumbnail</strong><p>Square-ish works best</p></label>
+            <div id="thumb-preview" class="img-preview-row"></div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--paper-2);">
+          <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;">DMAIC Write-Up</div>
+          <div class="form-grid">
+            <div class="field full"><label>Define</label><textarea id="ef-define" placeholder="What's the problem?"></textarea></div>
+            <div class="field full"><label>Measure</label><textarea id="ef-measure" placeholder="How bad is it? What data?"></textarea></div>
+            <div class="field full"><label>Analyze</label><textarea id="ef-analyze" placeholder="Root cause?"></textarea></div>
+            <div class="field full"><label>Improve</label><textarea id="ef-improve" placeholder="What did you change?"></textarea></div>
+            <div class="field full"><label>Control</label><textarea id="ef-control" placeholder="How do you sustain it?"></textarea></div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--paper-2);">
+          <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;">Detail Photos</div>
+          <label class="img-upload-zone"><input type="file" accept="image/*" multiple onchange="handlePhotosUpload(this)"><strong>Click to upload photos</strong><p>Before/after shots, process changes</p></label>
+          <div id="photos-preview" class="img-preview-row"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="closeEntryForm()">Cancel</button>
+          <button class="btn btn-primary" id="ef-save-btn" onclick="saveEntry()">Save Entry</button>
+        </div>
+      </div>
+    </div>
+    <div id="admin-entry-list" class="admin-entry-list"></div>
+  </div>
+</div>
+
+<footer>Andy Hochadel · Continuous Improvement · <span id="footer-year"></span></footer>
 
 <script>
-// ══ NAVIGATION ══════════════════════════════════════════════════════════
+// ══ CONFIG ═══════════════════════════════════════════════════════════════
+const SCRIPT_URL=''; // Paste your Kaizen Apps Script URL here after setup
+const ADMIN_PASSWORD='kaizen'; // Change this to your own password
+
+// ══ STATE ════════════════════════════════════════════════════════════════
+let entries=[],editingEntryId=null,thumbData=null,photosData=[],isAdmin=false,loaded=false;
+
+// ══ NAV ══════════════════════════════════════════════════════════════════
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('#main-nav a').forEach(a=>a.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelector(`nav a[onclick="showPage('${id}')"]`).classList.add('active');
+  ['about','kaizen','resources','admin'].forEach((p,i)=>{if(p===id){const a=document.querySelectorAll('#main-nav a')[i];if(a)a.classList.add('active');}});
   window.scrollTo(0,0);
+  if(id==='kaizen')loadEntries();
 }
-
-// Handle hash navigation
-function checkHash(){
-  const h=location.hash.replace('#','');
-  if(['about','kaizen','resources'].includes(h)) showPage(h);
-}
+function checkHash(){const h=location.hash.replace('#','');if(['about','kaizen','resources','admin'].includes(h))showPage(h);}
 window.addEventListener('hashchange',checkHash);
-if(location.hash) checkHash();
-
+if(location.hash)checkHash();
 document.getElementById('footer-year').textContent=new Date().getFullYear();
 
-// ══ KAIZEN LOG DATA ═════════════════════════════════════════════════════
-// Add your entries here. Each entry is an object in the array.
-// type: 'quick' | 'project' | 'system'
-// dmaic: object with define, measure, analyze, improve, control fields
-// link: optional URL to a full write-up page
-// thumb: optional image URL for the thumbnail
-// images: optional array of image URLs for the detail view
+// ══ UTILS ════════════════════════════════════════════════════════════════
+let toastTimer;
+function toast(msg,err=false){const el=document.getElementById('toast');el.textContent=msg;el.className=err?'terr show':'show';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.className=err?'terr':'',3500);}
+function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('open');}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function str(v){return String(v||'');}
+function tryJ(s,fb){try{return JSON.parse(s);}catch(e){return fb;}}
 
-const ENTRIES = [
-  {
-    id: 'pullcard-system',
-    title: 'Kanban Pull Card System',
-    desc: 'Replaced informal reorder process with printed kanban cards tied to reserve stock levels.',
-    date: '2026-04',
-    type: 'system',
-    thumb: null,
-    link: null, // e.g. 'projects/pullcard.html' when you create the deep-dive page
-    images: [],
-    dmaic: {
-      define: 'Shop floor had no standardized reorder process. Parts would run out before anyone noticed, causing production delays. Operators relied on memory or sticky notes to flag low stock.',
-      measure: 'Tracked 3 weeks of stockout events. Averaged 4 unplanned stockouts per week, each causing 15-45 minutes of downtime while someone scrambled to find or order parts.',
-      analyze: 'Root cause: no visual signal at point of use. Operators didn\'t know reorder points, and the information lived in a spreadsheet nobody on the floor could access.',
-      improve: 'Built a pull card system — physical kanban cards attached to reserve stock. When reserves are broken into, the card is pulled and turned in for reorder. Created a web app to manage card creation, printing, and reorder tracking with a Google Sheets backend.',
-      control: 'Cards are printed and laminated. Reorder history is tracked automatically. New hires are trained on the pull card process during onboarding. Monthly review of reorder frequency to adjust quantities.'
-    }
-  },
-  {
-    id: 'tool-shadow-board',
-    title: '5S Tool Shadow Boards',
-    desc: 'Created shadow boards for shared tool areas to eliminate search time and missing tools.',
-    date: '2026-03',
-    type: 'quick',
-    thumb: null,
-    link: null,
-    images: [],
-    dmaic: {
-      define: 'Shared tools at assembly stations were constantly misplaced. Operators wasted time searching for tools or borrowing from other stations.',
-      measure: 'Observed 8-12 minutes per shift spent searching for tools across 3 assembly stations.',
-      analyze: 'No designated home for each tool. Tools were tossed in drawers or left on benches after use.',
-      improve: 'Cut foam inserts with tool outlines for each station. Color-coded by station so it\'s immediately obvious when a tool is missing or in the wrong area.',
-      control: 'End-of-shift 5S check added to daily routine. Shadow boards make missing tools visible at a glance — no checklist needed.'
-    }
-  },
-  {
-    id: 'label-standardization',
-    title: 'Bin Label Standardization',
-    desc: 'Standardized bin labels across all storage areas with consistent location codes.',
-    date: '2026-02',
-    type: 'quick',
-    thumb: null,
-    link: null,
-    images: [],
-    dmaic: {
-      define: 'Storage bins had inconsistent or missing labels. New employees couldn\'t find parts without asking someone, and even experienced staff made errors picking from the wrong bin.',
-      measure: 'Picking errors averaged 3 per week. New employee ramp-up time for learning part locations was roughly 2 weeks.',
-      analyze: 'Labels used different formats — some had part numbers only, some had descriptions, some had nothing. Location coding system didn\'t exist.',
-      improve: 'Designed a standard label format: Location Code (aisle-shelf-position), Part Number, Description, and QTY per bin. Printed durable labels for all 200+ bins.',
-      control: 'Label template saved in shared drive. New bins get labeled before anything goes in them. Location codes are referenced in the pull card system.'
-    }
-  }
-];
-
-// ══ RENDER ENTRIES ══════════════════════════════════════════════════════
-function renderEntries(entries){
-  const list=document.getElementById('entry-list');
-  if(!entries.length){
-    list.innerHTML='<div style="text-align:center;padding:3rem;color:var(--ink-3);font-family:var(--mono);font-size:11px;">No entries match your search.</div>';
-    return;
-  }
-  list.innerHTML=entries.map(e=>{
-    const tagClass={quick:'quick',project:'project',system:'system'}[e.type]||'quick';
-    const tagLabel={quick:'Quick Win',project:'Project',system:'System'}[e.type]||e.type;
-    const thumbHTML=e.thumb
-      ?`<img src="${e.thumb}" alt="">`
-      :`<span class="thumb-icon">${e.type==='system'?'⚙️':e.type==='project'?'📋':'⚡'}</span>`;
-
-    const dmaicHTML=e.dmaic?Object.entries(e.dmaic).filter(([k,v])=>v).map(([k,v])=>`
-      <div class="dmaic-step">
-        <div class="dmaic-step-label">${k}</div>
-        <p>${esc(v)}</p>
-      </div>
-    `).join(''):'';
-
-    const linkHTML=e.link?`<a class="detail-link" href="${e.link}">Full Write-Up →</a>`:'';
-
-    const imagesHTML=e.images&&e.images.length?`
-      <div class="detail-images">
-        ${e.images.map(src=>`<div class="detail-img"><img src="${src}" alt=""></div>`).join('')}
-      </div>`:'';
-
-    return `
-    <div class="entry" data-type="${e.type}" data-title="${esc(e.title)}" data-desc="${esc(e.desc)}">
-      <div class="entry-row" onclick="toggleEntry(this)">
-        <div class="entry-thumb">${thumbHTML}</div>
-        <div class="entry-info">
-          <div class="entry-title">${esc(e.title)}</div>
-          <div class="entry-desc">${esc(e.desc)}</div>
-        </div>
-        <div class="entry-meta">
-          <span class="entry-tag ${tagClass}">${tagLabel}</span>
-          <span class="entry-date">${formatEntryDate(e.date)}</span>
-          <span class="entry-chevron">▸</span>
-        </div>
-      </div>
-      <div class="entry-detail">
-        <div class="detail-inner">
-          <div class="dmaic-flow">${dmaicHTML}</div>
-          ${imagesHTML}
-          ${linkHTML}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('log-count').textContent=entries.length+' entr'+(entries.length===1?'y':'ies');
-}
-
-function toggleEntry(row){
-  const entry=row.closest('.entry');
-  const detail=entry.querySelector('.entry-detail');
-  if(entry.classList.contains('open')){
-    entry.classList.remove('open');
-    detail.style.maxHeight='0';
-  } else {
-    // Close others
-    document.querySelectorAll('.entry.open').forEach(e=>{
-      e.classList.remove('open');
-      e.querySelector('.entry-detail').style.maxHeight='0';
-    });
-    entry.classList.add('open');
-    detail.style.maxHeight=detail.scrollHeight+'px';
-  }
-}
-
-function filterEntries(){
-  const q=document.getElementById('log-search').value.toLowerCase();
-  const type=document.getElementById('log-filter').value;
-  const filtered=ENTRIES.filter(e=>{
-    if(type&&e.type!==type) return false;
-    if(q&&!e.title.toLowerCase().includes(q)&&!e.desc.toLowerCase().includes(q)) return false;
-    return true;
-  });
-  renderEntries(filtered);
-}
-
-function formatEntryDate(d){
-  if(!d) return '';
-  const parts=d.split('-');
-  if(parts.length===2){
-    const months=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return months[parseInt(parts[1])]+' '+parts[0];
-  }
+function formatDate(d){
+  if(!d)return '';
+  var p=d.split('-');
+  if(p.length>=2){var m=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return m[parseInt(p[1])]+' '+p[0];}
   return d;
 }
 
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// ══ LOAD ═════════════════════════════════════════════════════════════════
+async function loadEntries(){
+  if(loaded&&entries.length){renderEntries(entries);return;}
+  if(!SCRIPT_URL){entries=getDemoEntries();loaded=true;renderEntries(entries);renderAdminList();return;}
+  try{
+    var res=await fetch(SCRIPT_URL+'?action=getEntries');
+    var json=await res.json();
+    if(!json.ok)throw new Error(json.error||'Load failed');
+    entries=(json.data||[]).map(normE).filter(e=>e.id);
+    entries.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    loaded=true;renderEntries(entries);renderAdminList();
+  }catch(e){document.getElementById('entry-list').innerHTML='<div class="loading-msg">Could not load entries. Check Apps Script URL.</div>';}
+}
 
-// Initial render
-renderEntries(ENTRIES);
+function normE(e){
+  return{id:str(e.id),title:str(e.title),desc:str(e.desc),date:str(e.date),type:str(e.type||'quick'),thumb:str(e.thumb),link:str(e.link),
+    images:e.images?(typeof e.images==='string'?tryJ(e.images,[]):e.images):[],
+    dmaic:e.dmaic?(typeof e.dmaic==='string'?tryJ(e.dmaic,{}):e.dmaic):{}};
+}
+
+// ══ RENDER PUBLIC ═══════════════════════════════════════════════════════
+function renderEntries(list){
+  var el=document.getElementById('entry-list');
+  if(!list.length){el.innerHTML='<div class="loading-msg">No entries yet.</div>';document.getElementById('log-count').textContent='';return;}
+  el.innerHTML=list.map(function(e){
+    var tc={quick:'quick',project:'project',system:'system'}[e.type]||'quick';
+    var tl={quick:'Quick Win',project:'Project',system:'System'}[e.type]||e.type;
+    var thm=e.thumb?'<img src="'+e.thumb+'" alt="">':'<span class="thumb-icon">'+(e.type==='system'?'\u2699\uFE0F':e.type==='project'?'\uD83D\uDCCB':'\u26A1')+'</span>';
+    var dm=e.dmaic?Object.keys(e.dmaic).filter(function(k){return e.dmaic[k];}).map(function(k){
+      return '<div class="dmaic-step"><div class="dmaic-step-label">'+esc(k)+'</div><p>'+esc(e.dmaic[k])+'</p></div>';
+    }).join(''):'';
+    var lnk=e.link?'<a class="detail-link" href="'+esc(e.link)+'">Full Write-Up \u2192</a>':'';
+    var imgs=e.images&&e.images.length?'<div class="detail-images">'+e.images.map(function(src){return '<div class="detail-img" onclick="openLightbox(\''+esc(src)+'\')"><img src="'+src+'" alt=""></div>';}).join('')+'</div>':'';
+    return '<div class="entry" data-type="'+e.type+'"><div class="entry-row" onclick="toggleEntry(this)"><div class="entry-thumb">'+thm+'</div><div class="entry-info"><div class="entry-title">'+esc(e.title)+'</div><div class="entry-desc">'+esc(e.desc)+'</div></div><div class="entry-meta"><span class="entry-tag '+tc+'">'+tl+'</span><span class="entry-date">'+formatDate(e.date)+'</span><span class="entry-chevron">\u25B8</span></div></div><div class="entry-detail"><div class="detail-inner"><div class="dmaic-flow">'+dm+'</div>'+imgs+lnk+'</div></div></div>';
+  }).join('');
+  document.getElementById('log-count').textContent=list.length+' entr'+(list.length===1?'y':'ies');
+}
+
+function toggleEntry(row){
+  var entry=row.closest('.entry'),detail=entry.querySelector('.entry-detail');
+  if(entry.classList.contains('open')){entry.classList.remove('open');detail.style.maxHeight='0';}
+  else{document.querySelectorAll('.entry.open').forEach(function(e){e.classList.remove('open');e.querySelector('.entry-detail').style.maxHeight='0';});entry.classList.add('open');detail.style.maxHeight=detail.scrollHeight+'px';}
+}
+
+function filterEntries(){
+  var q=document.getElementById('log-search').value.toLowerCase(),t=document.getElementById('log-filter').value;
+  renderEntries(entries.filter(function(e){if(t&&e.type!==t)return false;if(q&&e.title.toLowerCase().indexOf(q)===-1&&e.desc.toLowerCase().indexOf(q)===-1)return false;return true;}));
+}
+
+// ══ ADMIN ════════════════════════════════════════════════════════════════
+function adminLogin(){
+  if(document.getElementById('admin-pw').value===ADMIN_PASSWORD){isAdmin=true;document.getElementById('admin-login').style.display='none';document.getElementById('admin-panel').style.display='block';loadEntries().then(function(){renderAdminList();});}
+  else toast('Wrong password.',true);
+}
+
+function renderAdminList(){
+  var el=document.getElementById('admin-entry-list');
+  if(!entries.length){el.innerHTML='<div class="loading-msg">No entries yet. Click "+ New Entry" to create one.</div>';return;}
+  el.innerHTML=entries.map(function(e){return '<div class="admin-entry-row"><span class="admin-entry-title">'+esc(e.title)+'</span><span class="admin-entry-date">'+formatDate(e.date)+'</span><button class="btn btn-ghost btn-sm" onclick="editEntry(\''+e.id+'\')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteEntry(\''+e.id+'\')">Delete</button></div>';}).join('');
+}
+
+function openEntryForm(entry){
+  editingEntryId=entry?entry.id:null;
+  document.getElementById('ef-title').value=entry?entry.title:'';
+  document.getElementById('ef-type').value=entry?entry.type:'quick';
+  document.getElementById('ef-desc').value=entry?entry.desc:'';
+  document.getElementById('ef-date').value=entry?entry.date:new Date().toISOString().slice(0,7);
+  document.getElementById('ef-link').value=entry?entry.link:'';
+  document.getElementById('ef-define').value=entry&&entry.dmaic?entry.dmaic.define||'':'';
+  document.getElementById('ef-measure').value=entry&&entry.dmaic?entry.dmaic.measure||'':'';
+  document.getElementById('ef-analyze').value=entry&&entry.dmaic?entry.dmaic.analyze||'':'';
+  document.getElementById('ef-improve').value=entry&&entry.dmaic?entry.dmaic.improve||'':'';
+  document.getElementById('ef-control').value=entry&&entry.dmaic?entry.dmaic.control||'':'';
+  thumbData=entry?entry.thumb||null:null;
+  photosData=entry&&entry.images?entry.images.slice():[];
+  renderThumbPreview();renderPhotosPreview();
+  document.getElementById('ef-save-btn').textContent=entry?'Save Changes':'Save Entry';
+  document.getElementById('entry-form-wrap').style.display='block';
+  document.getElementById('entry-form-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeEntryForm(){document.getElementById('entry-form-wrap').style.display='none';editingEntryId=null;thumbData=null;photosData=[];}
+function editEntry(id){var e=entries.find(function(x){return x.id===id;});if(e)openEntryForm(e);}
+
+// ══ IMAGES ═══════════════════════════════════════════════════════════════
+function compressImg(file,maxDim,quality){
+  return new Promise(function(resolve){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'),w=img.width,h=img.height;
+      if(w>maxDim||h>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim;}else{w=Math.round(w*maxDim/h);h=maxDim;}}
+      c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',quality));URL.revokeObjectURL(img.src);
+    };
+    img.src=URL.createObjectURL(file);
+  });
+}
+
+async function handleThumbUpload(input){if(!input.files[0])return;thumbData=await compressImg(input.files[0],400,0.7);renderThumbPreview();input.value='';}
+async function handlePhotosUpload(input){if(!input.files.length)return;for(var i=0;i<input.files.length;i++){photosData.push(await compressImg(input.files[i],800,0.75));}renderPhotosPreview();input.value='';}
+
+function renderThumbPreview(){var el=document.getElementById('thumb-preview');if(!thumbData){el.innerHTML='';return;}el.innerHTML='<div class="img-preview-item"><img src="'+thumbData+'" alt=""><button class="remove-img" onclick="thumbData=null;renderThumbPreview();">\u00D7</button></div>';}
+function renderPhotosPreview(){var el=document.getElementById('photos-preview');if(!photosData.length){el.innerHTML='';return;}el.innerHTML=photosData.map(function(src,i){return '<div class="img-preview-item"><img src="'+src+'" alt=""><button class="remove-img" onclick="photosData.splice('+i+',1);renderPhotosPreview();">\u00D7</button></div>';}).join('');}
+
+// ══ SAVE / DELETE ════════════════════════════════════════════════════════
+async function saveEntry(){
+  var title=document.getElementById('ef-title').value.trim(),desc=document.getElementById('ef-desc').value.trim();
+  if(!title||!desc){alert('Title and Description are required.');return;}
+  var entry={id:editingEntryId||'entry-'+Date.now(),title:title,desc:desc,type:document.getElementById('ef-type').value,
+    date:document.getElementById('ef-date').value.trim()||new Date().toISOString().slice(0,7),
+    link:document.getElementById('ef-link').value.trim(),thumb:thumbData||'',
+    images:JSON.stringify(photosData),
+    dmaic:JSON.stringify({define:document.getElementById('ef-define').value.trim(),measure:document.getElementById('ef-measure').value.trim(),
+      analyze:document.getElementById('ef-analyze').value.trim(),improve:document.getElementById('ef-improve').value.trim(),
+      control:document.getElementById('ef-control').value.trim()})};
+  var btn=document.getElementById('ef-save-btn');btn.disabled=true;btn.textContent='Saving...';
+
+  if(!SCRIPT_URL){
+    if(editingEntryId){var idx=entries.findIndex(function(e){return e.id===editingEntryId;});if(idx!==-1)entries[idx]=normE(entry);}
+    else entries.unshift(normE(entry));
+    btn.disabled=false;btn.textContent='Save Entry';
+    toast('Saved! (demo mode \u2014 connect Google Sheets to persist)');
+    closeEntryForm();renderEntries(entries);renderAdminList();return;
+  }
+
+  try{
+    var res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'saveEntry',entry:entry})});
+    var json=await res.json();if(!json.ok)throw new Error(json.error||'Save failed');
+    if(editingEntryId){var idx2=entries.findIndex(function(e){return e.id===editingEntryId;});if(idx2!==-1)entries[idx2]=normE(entry);}
+    else entries.unshift(normE(entry));
+    entries.sort(function(a,b){return(b.date||'').localeCompare(a.date||'');});
+    toast('Entry saved!');closeEntryForm();renderEntries(entries);renderAdminList();
+  }catch(e){toast('Could not save: '+e.message,true);}
+  btn.disabled=false;btn.textContent=editingEntryId?'Save Changes':'Save Entry';
+}
+
+async function deleteEntry(id){
+  var e=entries.find(function(x){return x.id===id;});
+  if(!confirm('Delete "'+(e?e.title:id)+'"?'))return;
+  if(!SCRIPT_URL){entries=entries.filter(function(x){return x.id!==id;});toast('Deleted (demo mode).');renderEntries(entries);renderAdminList();return;}
+  try{
+    var res=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({action:'deleteEntry',entryId:id})});
+    var json=await res.json();if(!json.ok)throw new Error(json.error||'Delete failed');
+    entries=entries.filter(function(x){return x.id!==id;});toast('Entry deleted.');renderEntries(entries);renderAdminList();
+  }catch(e){toast('Could not delete: '+e.message,true);}
+}
+
+// ══ DEMO DATA ════════════════════════════════════════════════════════════
+function getDemoEntries(){return[
+  {id:'pullcard-system',title:'Kanban Pull Card System',desc:'Replaced informal reorder process with printed kanban cards tied to reserve stock levels.',date:'2026-04',type:'system',thumb:'',link:'',images:[],dmaic:{define:'Shop floor had no standardized reorder process. Parts would run out before anyone noticed, causing production delays.',measure:'Tracked 3 weeks of stockout events. Averaged 4 unplanned stockouts per week, each causing 15-45 minutes of downtime.',analyze:'Root cause: no visual signal at point of use. Operators didn\'t know reorder points, and the information lived in a spreadsheet nobody on the floor could access.',improve:'Built a pull card system \u2014 physical kanban cards attached to reserve stock. When reserves are broken into, the card is pulled and turned in for reorder. Created a web app to manage card creation, printing, and reorder tracking.',control:'Cards are printed and laminated. Reorder history is tracked automatically. New hires are trained on the pull card process during onboarding.'}},
+  {id:'tool-shadow-board',title:'5S Tool Shadow Boards',desc:'Created shadow boards for shared tool areas to eliminate search time and missing tools.',date:'2026-03',type:'quick',thumb:'',link:'',images:[],dmaic:{define:'Shared tools at assembly stations were constantly misplaced. Operators wasted time searching for tools or borrowing from other stations.',measure:'Observed 8-12 minutes per shift spent searching for tools across 3 assembly stations.',analyze:'No designated home for each tool. Tools were tossed in drawers or left on benches after use.',improve:'Cut foam inserts with tool outlines for each station. Color-coded by station so missing tools are immediately obvious.',control:'End-of-shift 5S check added to daily routine. Shadow boards make missing tools visible at a glance.'}},
+  {id:'label-standardization',title:'Bin Label Standardization',desc:'Standardized bin labels across all storage areas with consistent location codes.',date:'2026-02',type:'quick',thumb:'',link:'',images:[],dmaic:{define:'Storage bins had inconsistent or missing labels. New employees couldn\'t find parts without asking someone.',measure:'Picking errors averaged 3 per week. New employee ramp-up time for learning part locations was roughly 2 weeks.',analyze:'Labels used different formats \u2014 some had part numbers only, some had descriptions, some had nothing.',improve:'Designed a standard label format: Location Code, Part Number, Description, and QTY per bin. Printed durable labels for all 200+ bins.',control:'Label template saved in shared drive. New bins get labeled before anything goes in them. Location codes referenced in pull card system.'}}
+];}
+
+loadEntries();
 </script>
 </body>
 </html>
