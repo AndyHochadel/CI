@@ -227,13 +227,11 @@ footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-fa
           </div>
         </div>
         <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--paper-2);">
-          <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;">DMAIC Write-Up</div>
+          <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;">Write-Up <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3);">(all optional, fill in what fits)</span></div>
           <div class="form-grid">
-            <div class="field full"><label>Define</label><textarea id="ef-define" placeholder="What's the problem?"></textarea></div>
-            <div class="field full"><label>Measure</label><textarea id="ef-measure" placeholder="How bad is it? What data?"></textarea></div>
-            <div class="field full"><label>Analyze</label><textarea id="ef-analyze" placeholder="Root cause?"></textarea></div>
-            <div class="field full"><label>Improve</label><textarea id="ef-improve" placeholder="What did you change?"></textarea></div>
-            <div class="field full"><label>Control</label><textarea id="ef-control" placeholder="How do you sustain it?"></textarea></div>
+            <div class="field full"><label>Problem</label><textarea id="ef-problem" placeholder="What was wrong, frustrating, or inefficient?"></textarea></div>
+            <div class="field full"><label>Solution</label><textarea id="ef-solution" placeholder="What did you do about it?"></textarea></div>
+            <div class="field full"><label>Result</label><textarea id="ef-result" placeholder="How did it turn out? What changed?"></textarea></div>
           </div>
         </div>
         <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--paper-2);">
@@ -343,8 +341,17 @@ function renderEntries(list){
     var tc={quick:'quick',project:'project',system:'system'}[e.type]||'quick';
     var tl={quick:'Quick Win',project:'Project',system:'System'}[e.type]||e.type;
     var thm=e.thumb?'<img src="'+e.thumb+'" alt="">':'<span class="thumb-icon">'+(e.type==='system'?'\u2699\uFE0F':e.type==='project'?'\uD83D\uDCCB':'\u26A1')+'</span>';
-    var dm=e.dmaic?Object.keys(e.dmaic).filter(function(k){return e.dmaic[k];}).map(function(k){
-      return '<div class="dmaic-step"><div class="dmaic-step-label">'+esc(k)+'</div><p>'+esc(e.dmaic[k])+'</p></div>';
+    var labels={problem:'Problem',solution:'Solution',result:'Result',define:'Problem',measure:'Measure',analyze:'Analyze',improve:'Solution',control:'Result'};
+    var order=['problem','define','measure','analyze','solution','improve','result','control'];
+    var seen={};
+    var dm=e.dmaic?order.filter(function(k){
+      if(!e.dmaic[k])return false;
+      var lbl=labels[k]||k;
+      if(seen[lbl])return false;
+      seen[lbl]=true;
+      return true;
+    }).map(function(k){
+      return '<div class="dmaic-step"><div class="dmaic-step-label">'+esc(labels[k]||k)+'</div><p>'+esc(e.dmaic[k])+'</p></div>';
     }).join(''):'';
     var lnk=e.link?'<a class="detail-link" href="'+esc(e.link)+'">Full Write-Up \u2192</a>':'';
     var imgs=e.images&&e.images.length?'<div class="detail-images">'+e.images.map(function(src){return '<div class="detail-img" onclick="openLightbox(\''+esc(src)+'\')"><img src="'+src+'" alt=""></div>';}).join('')+'</div>':'';
@@ -383,11 +390,11 @@ function openEntryForm(entry){
   document.getElementById('ef-desc').value=entry?entry.desc:'';
   document.getElementById('ef-date').value=entry?entry.date:new Date().toISOString().slice(0,7);
   document.getElementById('ef-link').value=entry?entry.link:'';
-  document.getElementById('ef-define').value=entry&&entry.dmaic?entry.dmaic.define||'':'';
-  document.getElementById('ef-measure').value=entry&&entry.dmaic?entry.dmaic.measure||'':'';
-  document.getElementById('ef-analyze').value=entry&&entry.dmaic?entry.dmaic.analyze||'':'';
-  document.getElementById('ef-improve').value=entry&&entry.dmaic?entry.dmaic.improve||'':'';
-  document.getElementById('ef-control').value=entry&&entry.dmaic?entry.dmaic.control||'':'';
+  // Load write-up fields. Support both new format (problem/solution/result) and old DMAIC entries.
+  var wu=entry&&entry.dmaic?entry.dmaic:{};
+  document.getElementById('ef-problem').value=wu.problem||wu.define||'';
+  document.getElementById('ef-solution').value=wu.solution||wu.improve||'';
+  document.getElementById('ef-result').value=wu.result||wu.control||'';
   thumbData=entry?entry.thumb||null:null;
   photosData=entry&&entry.images?entry.images.slice():[];
   renderThumbPreview();renderPhotosPreview();
@@ -426,9 +433,9 @@ async function saveEntry(){
     date:document.getElementById('ef-date').value.trim()||new Date().toISOString().slice(0,7),
     link:document.getElementById('ef-link').value.trim(),thumb:thumbData||'',
     images:JSON.stringify(photosData),
-    dmaic:JSON.stringify({define:document.getElementById('ef-define').value.trim(),measure:document.getElementById('ef-measure').value.trim(),
-      analyze:document.getElementById('ef-analyze').value.trim(),improve:document.getElementById('ef-improve').value.trim(),
-      control:document.getElementById('ef-control').value.trim()})};
+    dmaic:JSON.stringify({problem:document.getElementById('ef-problem').value.trim(),
+      solution:document.getElementById('ef-solution').value.trim(),
+      result:document.getElementById('ef-result').value.trim()})};
   var btn=document.getElementById('ef-save-btn');btn.disabled=true;btn.textContent='Saving...';
 
   if(!SCRIPT_URL){
@@ -463,9 +470,9 @@ async function deleteEntry(id){
 
 // ══ DEMO DATA ════════════════════════════════════════════════════════════
 function getDemoEntries(){return[
-  {id:'pullcard-system',title:'Kanban Pull Card System',desc:'Replaced informal reorder process with printed kanban cards tied to reserve stock levels.',date:'2026-04',type:'system',thumb:'',link:'',images:[],dmaic:{define:'Shop floor had no standardized reorder process. Parts would run out before anyone noticed, causing production delays.',measure:'Tracked 3 weeks of stockout events. Averaged 4 unplanned stockouts per week, each causing 15-45 minutes of downtime.',analyze:'Root cause: no visual signal at point of use. Operators didn\'t know reorder points, and the information lived in a spreadsheet nobody on the floor could access.',improve:'Built a pull card system \u2014 physical kanban cards attached to reserve stock. When reserves are broken into, the card is pulled and turned in for reorder. Created a web app to manage card creation, printing, and reorder tracking.',control:'Cards are printed and laminated. Reorder history is tracked automatically. New hires are trained on the pull card process during onboarding.'}},
-  {id:'tool-shadow-board',title:'5S Tool Shadow Boards',desc:'Created shadow boards for shared tool areas to eliminate search time and missing tools.',date:'2026-03',type:'quick',thumb:'',link:'',images:[],dmaic:{define:'Shared tools at assembly stations were constantly misplaced. Operators wasted time searching for tools or borrowing from other stations.',measure:'Observed 8-12 minutes per shift spent searching for tools across 3 assembly stations.',analyze:'No designated home for each tool. Tools were tossed in drawers or left on benches after use.',improve:'Cut foam inserts with tool outlines for each station. Color-coded by station so missing tools are immediately obvious.',control:'End-of-shift 5S check added to daily routine. Shadow boards make missing tools visible at a glance.'}},
-  {id:'label-standardization',title:'Bin Label Standardization',desc:'Standardized bin labels across all storage areas with consistent location codes.',date:'2026-02',type:'quick',thumb:'',link:'',images:[],dmaic:{define:'Storage bins had inconsistent or missing labels. New employees couldn\'t find parts without asking someone.',measure:'Picking errors averaged 3 per week. New employee ramp-up time for learning part locations was roughly 2 weeks.',analyze:'Labels used different formats \u2014 some had part numbers only, some had descriptions, some had nothing.',improve:'Designed a standard label format: Location Code, Part Number, Description, and QTY per bin. Printed durable labels for all 200+ bins.',control:'Label template saved in shared drive. New bins get labeled before anything goes in them. Location codes referenced in pull card system.'}}
+  {id:'pullcard-system',title:'Kanban Pull Card System',desc:'Designed and built a kanban pull card system to replace an informal reorder process.',date:'2026-04',type:'system',thumb:'',link:'',images:[],dmaic:{problem:'We had no standardized way to signal when parts or supplies needed reordering. Operators would tell someone verbally or leave a note, and it was hit or miss whether that message made it to purchasing.',solution:'I designed a physical kanban card system tied to reserve stock levels. Each managed part gets a printed card that sits with the reserve quantity. When an operator breaks into the reserves, they pull the card and turn it in. I also built a web app to manage the whole system, with a Google Sheets backend.',result:'Forgotten orders went away. Purchasing has full visibility into what the floor needs, and we now have a complete reorder history we never had before.'}},
+  {id:'tool-shadow-board',title:'5S Tool Shadow Boards',desc:'Created shadow boards for shared tool areas to eliminate search time and missing tools.',date:'2026-03',type:'quick',thumb:'',link:'',images:[],dmaic:{problem:'Shared tools at assembly stations were constantly misplaced. Operators wasted time searching for tools or borrowing from other stations.',solution:'Cut foam inserts with tool outlines for each station. Color-coded by station so missing tools are immediately obvious.',result:'Missing tools are spotted at a glance. End-of-shift cleanup takes seconds instead of minutes.'}},
+  {id:'label-standardization',title:'Bin Label Standardization',desc:'Standardized bin labels across all storage areas with consistent location codes.',date:'2026-02',type:'quick',thumb:'',link:'',images:[],dmaic:{problem:'Storage bins had inconsistent or missing labels. New employees could not find parts without asking someone.',solution:'Designed a standard label format with Location Code, Part Number, Description, and QTY per bin. Printed durable labels for all bins.',result:'New hires get up to speed faster, and picking errors dropped noticeably. The location codes also tie into the pull card system.'}}
 ];}
 
 loadEntries();
